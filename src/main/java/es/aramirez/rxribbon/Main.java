@@ -3,30 +3,18 @@ package es.aramirez.rxribbon;
 import es.aramirez.rxribbon.sync.JustItemRepository;
 import es.aramirez.rxribbon.sync.JustLocationRepository;
 import es.aramirez.rxribbon.sync.JustUserRepository;
-import rx.Observable;
 
 public class Main {
 
-  private static UserRepository userRepository;
-  private static LocationRepository locationRepository;
-  private static ItemRepository itemRepository;
-
-  private Main() {
-    userRepository = new JustUserRepository();
-    locationRepository = new JustLocationRepository();
-    itemRepository = new JustItemRepository();
-  }
+  private Main() {}
 
   public static void main(String[] args) {
-
-    new Main();
-
-    Observable.zip(
-      userRepository.findByName("User Name"),
-      locationRepository.create(42.2, 15.5),
-      itemRepository.findById(42),
-      Aggregated::new
+    new Service(
+      new JustUserRepository(),
+      new JustLocationRepository(),
+      new JustItemRepository()
     )
+      .execute(new ServiceRequest("Person", 42.2, 15.5, 42))
       .doOnNext(System.out::println)
       .subscribe()
     ;
