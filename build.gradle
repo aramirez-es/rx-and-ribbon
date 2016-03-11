@@ -1,0 +1,19 @@
+group 'es.aramirez'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile 'com.netflix.ribbon:ribbon-core:2.1.2'
+    compile 'com.netflix.ribbon:ribbon-httpclient:2.1.2'
+    compile 'com.netflix.ribbon:ribbon:2.1.2'
+
+    compile 'io.reactivex:rxjava:1.0.10'
+}
