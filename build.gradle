@@ -16,4 +16,6 @@ dependencies {
     compile 'com.netflix.ribbon:ribbon:2.1.2'
 
     compile 'io.reactivex:rxjava:1.0.10'
+    compile "io.reactivex:rxnetty:0.4.9"
+    compile 'com.netflix.karyon:karyon2-eureka:2.7.1'
 }
