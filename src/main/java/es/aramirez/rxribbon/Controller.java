@@ -57,10 +57,10 @@ public class Controller implements RequestHandler<ByteBuf, ByteBuf> {
     return response.writeStringAndFlush(System.lineSeparator());
   }
 
-  private void printMemoryInformation() {
+  private synchronized void printMemoryInformation() {
     if (isInitialized.getAndSet(true)) {
       System.out.print(String.format("%c[%dA", 0x1B, 5));
-      System.out.print(String.format("%c[%dD", 0x1B, 25));
+      System.out.print(String.format("%c[%dD", 0x1B, 50));
     }
     System.out.println("#======================#");
     System.out.println(String.format("# Free Memory:  %s #", humanize(Runtime.getRuntime().freeMemory())));
