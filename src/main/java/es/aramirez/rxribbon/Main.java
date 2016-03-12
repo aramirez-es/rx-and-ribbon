@@ -13,6 +13,11 @@ public class Main {
 
   private static final DynamicPropertyFactory propertyFactory = DynamicPropertyFactory.getInstance();
 
+  private static final List<String> validEnvironments = new ArrayList<String>() {{
+    add("sync");
+    add("async");
+  }};
+
   public static void main(String[] args) {
 
     try {
@@ -28,6 +33,7 @@ public class Main {
         (ItemRepository) itemRepo.newInstance()
       );
 
+      InformationPrinter.printInformation();
       Server.start(new Controller(service));
     } catch (Exception e) {
       System.err.println(e);
@@ -41,9 +47,6 @@ public class Main {
 
   private static String getEnvOrThrowError() {
     String env = System.getProperty(ENV_KEY);
-    List<String> validEnvironments = new ArrayList<String>() {{
-      add("dev");
-    }};
 
     if (validEnvironments.contains(env)) {
       return env;
