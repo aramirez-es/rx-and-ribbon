@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Main {
   private static final String ENV_KEY = "env";
-  private static final String DEFAULT_ENV = "dev";
   private static final String USER_REPO = "userrepo";
   private static final String LOCATION_REPO = "locationrepo";
   private static final String ITEM_REPO = "itemrepo";
