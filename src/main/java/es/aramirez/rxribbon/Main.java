@@ -1,26 +1,55 @@
 package es.aramirez.rxribbon;
 
 import com.netflix.config.DynamicPropertyFactory;
-import es.aramirez.rxribbon.sync.JustItemRepository;
-import es.aramirez.rxribbon.sync.JustLocationRepository;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
+  private static final String ENV_KEY = "env";
+  private static final String DEFAULT_ENV = "dev";
+  private static final String USER_REPO = "userrepo";
+  private static final String LOCATION_REPO = "locationrepo";
+  private static final String ITEM_REPO = "itemrepo";
+
   private static final DynamicPropertyFactory propertyFactory = DynamicPropertyFactory.getInstance();
 
-  public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+  public static void main(String[] args) {
 
-    Class userRepo = Class.forName(propertyFactory.getStringProperty("userrepo.dev", "").get());
-    Class locationRepo = Class.forName(propertyFactory.getStringProperty("locationrepo.dev", "").get());
-    Class itemRepo = Class.forName(propertyFactory.getStringProperty("itemrepo.dev", "").get());
+    try {
+      String env = getEnvOrThrowError();
 
-    Service service = new Service(
-      (UserRepository) userRepo.newInstance(),
-      (LocationRepository) locationRepo.newInstance(),
-      (ItemRepository) itemRepo.newInstance()
-    );
+      Class userRepo = Class.forName(propertyFactory.getStringProperty(getRepo(USER_REPO, env), "").get());
+      Class locationRepo = Class.forName(propertyFactory.getStringProperty(getRepo(LOCATION_REPO, env), "").get());
+      Class itemRepo = Class.forName(propertyFactory.getStringProperty(getRepo(ITEM_REPO, env), "").get());
 
-    Server.start(new Controller(service));
+      Service service = new Service(
+        (UserRepository) userRepo.newInstance(),
+        (LocationRepository) locationRepo.newInstance(),
+        (ItemRepository) itemRepo.newInstance()
+      );
+
+      Server.start(new Controller(service));
+    } catch (Exception e) {
+      System.err.println(e);
+      System.exit(-1);
+    }
+  }
+
+  private static String getRepo(String whatRepo, String env) {
+    return String.format("%s.%s", whatRepo, env);
+  }
+
+  private static String getEnvOrThrowError() {
+    String env = System.getProperty(ENV_KEY);
+    List<String> validEnvironments = new ArrayList<String>() {{
+      add("dev");
+    }};
+
+    if (validEnvironments.contains(env)) {
+      return env;
+    }
+
+    throw new IllegalArgumentException(String.format("\"%s\" is not a valid environment", env));
   }
 }

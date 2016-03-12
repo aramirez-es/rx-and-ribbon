@@ -5,7 +5,7 @@ https://github.com/joke2k/faker
 
 ## Execute
 ```bash
-$ gradlew clean run
+$ ./gradlew clean run -Denv=pre
 ```
 
 ```bash

@@ -25,3 +25,7 @@ dependencies {
 }
 
 mainClassName = "es.aramirez.rxribbon.Main"
+
+run {
+    systemProperty "env", System.getProperty("env")
+}
