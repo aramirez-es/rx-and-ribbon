@@ -6,11 +6,11 @@ import netflix.karyon.ShutdownModule;
 import netflix.karyon.transport.http.SimpleUriRouter;
 
 public class Server {
-  public static void start() {
+  public static void start(Controller controller) {
 
     SimpleUriRouter<ByteBuf, ByteBuf> router =
       new SimpleUriRouter<ByteBuf, ByteBuf>()
-        .addUri("/hello", new Controller());
+        .addUri("/hello", controller);
 
     Karyon
       .forRequestHandler(8000, router, ShutdownModule.asBootstrapModule())

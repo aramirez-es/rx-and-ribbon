@@ -19,6 +19,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.0.10'
     compile "io.reactivex:rxnetty:0.4.9"
     compile 'com.netflix.karyon:karyon2-eureka:2.7.1'
+    compile 'com.netflix.archaius:archaius2-core:2.0.0'
 
     compile 'commons-io:commons-io:2.4'
 }

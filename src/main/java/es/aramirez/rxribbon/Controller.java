@@ -1,8 +1,5 @@
 package es.aramirez.rxribbon;
 
-import es.aramirez.rxribbon.sync.JustItemRepository;
-import es.aramirez.rxribbon.sync.JustLocationRepository;
-import es.aramirez.rxribbon.sync.JustUserRepository;
 import io.netty.buffer.ByteBuf;
 import io.reactivex.netty.protocol.http.server.HttpServerRequest;
 import io.reactivex.netty.protocol.http.server.HttpServerResponse;
@@ -19,12 +16,8 @@ public class Controller implements RequestHandler<ByteBuf, ByteBuf> {
   private final Service service;
   private AtomicBoolean isInitialized = new AtomicBoolean(false);
 
-  public Controller() {
-    this.service = new Service(
-      new JustUserRepository(),
-      new JustLocationRepository(),
-      new JustItemRepository()
-    );
+  public Controller(Service service) {
+    this.service = service;
   }
 
   @Override
