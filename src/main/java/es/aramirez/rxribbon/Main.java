@@ -16,6 +16,7 @@ public class Main {
   private static final List<String> validEnvironments = new ArrayList<String>() {{
     add("sync");
     add("async");
+    add("latency");
   }};
 
   public static void main(String[] args) {
