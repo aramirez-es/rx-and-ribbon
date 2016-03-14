@@ -6,16 +6,13 @@ import rx.Observable;
 import rx.schedulers.Schedulers;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class DeferLatencyLocationRepository implements LocationRepository {
   @Override
   public Observable<Location> create(Double latitude, Double longitude) {
-    return Observable.defer(() -> {
-      try {
-        Thread.sleep((long) (new Random().nextInt(5) * 1000));
-      } catch (InterruptedException e) { }
-        return Observable.just(new Location(latitude, longitude));
-      })
+    return Observable.defer(() -> Observable.just(new Location(latitude, longitude)))
+      .delay((long) (new Random().nextInt(30) * 100), TimeUnit.MILLISECONDS)
       .subscribeOn(Schedulers.io())
       .observeOn(Schedulers.computation());
   }
