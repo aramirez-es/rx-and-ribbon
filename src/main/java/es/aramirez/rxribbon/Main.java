@@ -17,6 +17,7 @@ public class Main {
     add("sync");
     add("async");
     add("latency");
+    add("ribbon");
   }};
 
   public static void main(String[] args) {

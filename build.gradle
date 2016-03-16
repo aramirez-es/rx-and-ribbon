@@ -15,12 +15,14 @@ dependencies {
     compile 'com.netflix.ribbon:ribbon-core:2.1.2'
     compile 'com.netflix.ribbon:ribbon-httpclient:2.1.2'
     compile 'com.netflix.ribbon:ribbon:2.1.2'
-
-    compile 'io.reactivex:rxjava:1.0.10'
-    compile "io.reactivex:rxnetty:0.4.9"
     compile 'com.netflix.karyon:karyon2-eureka:2.7.1'
     compile 'com.netflix.archaius:archaius2-core:2.0.0'
 
+    compile 'io.reactivex:rxjava:1.0.10'
+    compile 'io.reactivex:rxnetty:0.4.9'
+
+    compile 'org.slf4j:slf4j-api:1.7.0'
+    compile 'ch.qos.logback:logback-classic:1.1.6'
     compile 'commons-io:commons-io:2.4'
 }
 
