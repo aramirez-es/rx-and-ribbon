@@ -12,7 +12,8 @@ There are different scenarios here (all of them sharing a common service using Z
 - Repositories that emit a single value using *Observable.just* to simulate sync operations.
 - Repositories that use *Observable.defer* and *Schedulers.io* and *Schedulers.computation* in Observable creation and subscription, to simulate async operations.
 - Repositories as the previous ones but adding random delay to test services with *latency*.
-- (WIP) Repositories making requests to external services using *Ribbon Commands*.
+- Repositories making requests to external services using *Ribbon Commands*.
+- Repositories making requests to external services using *Ribbon Commands* and limit to one emitted element using Take(1) operator.
 
 
 ## Execute
