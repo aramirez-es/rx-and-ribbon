@@ -22,6 +22,12 @@ To chose what scenario to run, you can give the run command the *env* property:
 $ ./gradlew clean run -Denv=sync
 ```
 
+This project exposed the following endpint:
+
+```bash
+$ curl -i "http://localhost:8000/hello?user=pepe&latitude=42.3&longitude=13.3&itemId=42"
+```
+
 Once the service is running, we use locust to take it under load and try to reproduce production situations. 
 
 ```bash
