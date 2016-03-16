@@ -5,7 +5,7 @@ fake = Factory.create()
 
 class LoadTest(TaskSet):
     @task()
-    def displayThePtaForm(self):
+    def sendRequest(self):
         data = {
             'user': fake.name(),
             'latitude': fake.latitude(),

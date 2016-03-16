@@ -4,11 +4,16 @@ import com.netflix.ribbon.http.HttpRequestTemplate;
 import es.aramirez.rxribbon.User;
 import es.aramirez.rxribbon.UserRepository;
 import io.netty.buffer.ByteBuf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rx.Observable;
 
 import javax.ws.rs.HttpMethod;
 
 public class RibbonUserRepository extends RibbonCommand implements UserRepository {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(RibbonUserRepository.class);
+
   private static final String RESOURCE_GROUP = "userService";
   private static final String TEMPLATE = "getPokemon";
   private final HttpRequestTemplate<ByteBuf> template;
@@ -26,6 +31,6 @@ public class RibbonUserRepository extends RibbonCommand implements UserRepositor
       .toObservable()
       .map(this::byteBufToString)
       .map(contentAsString -> new User(userName))
-      .doOnError(Throwable::printStackTrace);
+      .doOnError(throwable -> LOGGER.error(throwable.getMessage()));
   }
 }

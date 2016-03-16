@@ -4,11 +4,16 @@ import com.netflix.ribbon.http.HttpRequestTemplate;
 import es.aramirez.rxribbon.Item;
 import es.aramirez.rxribbon.ItemRepository;
 import io.netty.buffer.ByteBuf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rx.Observable;
 
 import javax.ws.rs.HttpMethod;
 
 public class RibbonItemRepository extends RibbonCommand implements ItemRepository {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(RibbonItemRepository.class);
+
   private static final String RESOURCE_GROUP = "itemService";
   private static final String TEMPLATE = "getItem";
   private final HttpRequestTemplate<ByteBuf> template;
@@ -26,6 +31,6 @@ public class RibbonItemRepository extends RibbonCommand implements ItemRepositor
       .toObservable()
       .map(this::byteBufToString)
       .map(contentAsString -> new Item(id))
-      .doOnError(Throwable::printStackTrace);
+      .doOnError(throwable -> LOGGER.error(throwable.getMessage()));
   }
 }

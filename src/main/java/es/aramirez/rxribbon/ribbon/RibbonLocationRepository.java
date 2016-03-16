@@ -4,10 +4,15 @@ import com.netflix.ribbon.http.HttpRequestTemplate;
 import es.aramirez.rxribbon.Location;
 import es.aramirez.rxribbon.LocationRepository;
 import io.netty.buffer.ByteBuf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rx.Observable;
 import javax.ws.rs.HttpMethod;
 
 public class RibbonLocationRepository extends RibbonCommand implements LocationRepository {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(RibbonLocationRepository.class);
+
   private static final String RESOURCE_GROUP = "locationService";
   private static final String TEMPLATE = "getHabitat";
   private final HttpRequestTemplate<ByteBuf> template;
@@ -25,6 +30,6 @@ public class RibbonLocationRepository extends RibbonCommand implements LocationR
       .toObservable()
       .map(this::byteBufToString)
       .map(contentAsString -> new Location(latitude, longitude))
-      .doOnError(Throwable::printStackTrace);
+      .doOnError(throwable -> LOGGER.error(throwable.getMessage()));
   }
 }
